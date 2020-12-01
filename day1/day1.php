@@ -2,16 +2,12 @@
 
 namespace Imevul\AdventOfCode2020\Day1;
 
-require_once '../Common/autoload.php';
-
 /**
  * Get the puzzle input in a format we can handle.
  * @return array
  */
 function getInput() : array {
-	$lines = explode("\r\n", file_get_contents('input.txt'));
-
-	return $lines;
+	return explode(PHP_EOL, file_get_contents('input.txt'));
 }
 
 /**
@@ -19,13 +15,15 @@ function getInput() : array {
  * @return int The result
  */
 function part1(array $input) : int {
-	$result = 0;
-
-	foreach ($input as $change) {
-		$result += (int)$change;
+	foreach ($input as $item1) {
+		foreach ($input as $item2) {
+			if ($item1 + $item2 == 2020) {
+				return $item1 * $item2;
+			}
+		}
 	}
 
-	return $result;
+	return 0;
 }
 
 /**
@@ -33,13 +31,17 @@ function part1(array $input) : int {
  * @return int The result
  */
 function part2(array $input) : int {
-	$result = 0;
+	foreach ($input as $item1) {
+		foreach ($input as $item2) {
+			foreach ($input as $item3) {
+				if ($item1 + $item2 + $item3 == 2020) {
+					return $item1 * $item2 * $item3;
+				}
+			}
+		}
+	}
 
-//	foreach ($input as $change) {
-//		$result += (int)$change;
-//	}
-	
-	return $result;
+	return 0;
 }
 
 $input = getInput();
