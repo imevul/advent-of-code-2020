@@ -9,7 +9,7 @@ require_once '../Common/autoload.php';
  * @return array
  */
 function getInput() : array {
-	$lines = explode("\r\n", file_get_contents('input.txt'));
+	$lines = explode(PHP_EOL, file_get_contents('input.txt'));
 
 	return $lines;
 }
@@ -21,8 +21,8 @@ function getInput() : array {
 function part1(array $input) : int {
 	$result = 0;
 
-	foreach ($input as $change) {
-		$result += (int)$change;
+	foreach ($input as $item) {
+		$result += (int)$item;
 	}
 
 	return $result;
@@ -35,10 +35,6 @@ function part1(array $input) : int {
 function part2(array $input) : int {
 	$result = 0;
 
-//	foreach ($input as $change) {
-//		$result += (int)$change;
-//	}
-	
 	return $result;
 }
 
