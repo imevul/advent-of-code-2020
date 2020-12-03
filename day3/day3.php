@@ -27,7 +27,7 @@ function getInput() : array {
  * @param int $dy The slope delta-y
  * @return int The number of trees found
  */
-function countTrees(array $map, int $dx, int $dy) {
+function countTrees(array $map, int $dx, int $dy) : int {
 	$x = 0;
 	$y = 0;
 	$mx = count($map[0]);
