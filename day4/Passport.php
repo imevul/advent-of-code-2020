@@ -2,8 +2,6 @@
 
 namespace Imevul\AdventOfCode2020\Day4;
 
-use Closure;
-
 /**
  * Class Passport
  * @package Imevul\AdventOfCode2020\Day4
@@ -39,9 +37,7 @@ class Passport {
 		$fields = explode(' ', $passport->definition);
 
 		foreach ($fields as $field) {
-			$parts = explode(':', $field);
-			$key = $parts[0];
-			$value = $parts[1];
+			[$key, $value] = explode(':', $field);
 
 			if (property_exists($passport, $key)) {
 				$passport->{$key} = $value;
@@ -70,9 +66,9 @@ class Passport {
 	}
 
 	/**
-	 * @return Closure[] Returns the validation rules for the Passport fields.
+	 * @return array Returns the validation rules for the Passport fields.
 	 */
-	protected function rules() {
+	protected function rules(): array {
 		return [
 			'byr' => function($v) { return mb_strlen($v) === 4 && (int)$v >= 1920 && (int)$v <= 2002; },
 			'iyr' => function($v) { return mb_strlen($v) === 4 && (int)$v >= 2010 && (int)$v <= 2020; },
@@ -80,13 +76,13 @@ class Passport {
 			'hgt' => function($v) {
 				if (!preg_match('/^(\d+)(cm|in)$/', $v, $matches)) return FALSE;
 
-				switch ($matches[2]) {
-					case 'cm': return (int)$matches[1] >= 150 && (int)$matches[1] <= 193;
-					case 'in': return (int)$matches[1] >= 59 && (int)$matches[1] <= 76;
-					default: return FALSE;
-				}
+				return match($matches[2]) {
+					'cm' => (int)$matches[1] >= 150 && (int)$matches[1] <= 193,
+					'in' => (int)$matches[1] >= 59 && (int)$matches[1] <= 76,
+					default => FALSE,
+				};
 			},
-			'hcl' => function($v) { return preg_match('/^\#[a-f0-9]{6}$/i', $v); },
+			'hcl' => function($v) { return preg_match('/^#[a-f0-9]{6}$/i', $v); },
 			'ecl' => function($v) { return in_array($v, ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth']); },
 			'pid' => function($v) { return preg_match('/^\d{9}$/', $v); },
 		];
